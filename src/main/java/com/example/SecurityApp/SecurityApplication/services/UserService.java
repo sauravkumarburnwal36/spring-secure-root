@@ -33,6 +33,13 @@ public class UserService implements UserDetailsService {
         );
     }
 
+    public User getUserById(Long userId){
+        return userRepository.findById(userId).orElseThrow(
+                ()->{
+           throw new ResourceNotFoundException("User with userId: "+userId+" not found");
+        });
+    }
+
     public UserDTO signUp(SignUpDTO signUpDTO) {
         Optional<User> user=userRepository.findByEmail(signUpDTO.getEmail());
         if(user.isPresent()){
