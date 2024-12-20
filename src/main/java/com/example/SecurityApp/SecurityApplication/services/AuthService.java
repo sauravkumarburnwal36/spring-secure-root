@@ -20,4 +20,16 @@ public class AuthService {
         User user=(User)authentication.getPrincipal();
         return jwtService.generateToken(user);
     }
+
+    public Long getUserIdByLogin(LogInDTO logInDTO) {
+        Authentication authentication= authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(logInDTO.getEmail(),logInDTO.getPassword())
+        );
+        User user=(User)authentication.getPrincipal();
+        return user.getId();
+    }
+
+    public Long getUserIdByToken(String token) {
+        return jwtService.getUserIdFromToken(token);
+    }
 }
