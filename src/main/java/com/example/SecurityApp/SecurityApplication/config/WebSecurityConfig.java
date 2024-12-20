@@ -22,7 +22,7 @@ public class WebSecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeHttpRequests(auth->auth
-                                .requestMatchers("/posts/**","/auth/**","/error").permitAll()
+                                .requestMatchers("/posts","/auth/**","/error").permitAll()
 //                                .requestMatchers("/posts/**").hasAnyRole("ADMIN")
                         .anyRequest().authenticated())
                 .csrf(csrfConfig->csrfConfig.disable())
