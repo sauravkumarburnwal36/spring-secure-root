@@ -27,4 +27,9 @@ public class GlobalExceptionHandler {
         ApiError apiError=new ApiError(ex.getLocalizedMessage(), HttpStatus.UNAUTHORIZED);
         return new ResponseEntity<>(apiError,HttpStatus.UNAUTHORIZED);
     }
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiError> handleException(Exception ex){
+        ApiError apiError=new ApiError(ex.getLocalizedMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(apiError,HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }
