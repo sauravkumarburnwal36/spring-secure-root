@@ -1,7 +1,6 @@
 package com.example.SecurityApp.SecurityApplication.config;
 
 import com.example.SecurityApp.SecurityApplication.filters.JwtAuthFilter;
-import com.example.SecurityApp.SecurityApplication.filters.LoggingFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,12 +18,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig {
 
     private final JwtAuthFilter jwtAuthFilter;
-    private final LoggingFilter loggingFilter;
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeHttpRequests(auth->auth
-                                .requestMatchers("/posts","/auth/**","/error").permitAll()
+                                .requestMatchers("/posts/**","/auth/**","/error").permitAll()
 //                                .requestMatchers("/posts/**").hasAnyRole("ADMIN")
                         .anyRequest().authenticated())
                 .csrf(csrfConfig->csrfConfig.disable())
