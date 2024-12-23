@@ -7,8 +7,9 @@ import com.example.SecurityApp.SecurityApplication.repositories.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
+import com.example.SecurityApp.SecurityApplication.entities.User;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,12 +29,14 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public PostDTO getPostById(Long postId) {
-        PostEntity postEntity=postRepository.findById(postId).orElseThrow(()->new ResourceNotFoundException("Post with id: "+postId+" not found"));
+        PostEntity postEntity=postRepository.findById(postId).orElseThrow(()->new
+                ResourceNotFoundException("Post with id: "+postId+" not found"));
         return modelMapper.map(postEntity,PostDTO.class);
     }
 
     @Override
     public PostDTO createNewPost(PostDTO postDTO) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         PostEntity postEntity=modelMapper.map(postDTO,PostEntity.class);
         return modelMapper.map(postRepository.save(postEntity),PostDTO.class);
     }
