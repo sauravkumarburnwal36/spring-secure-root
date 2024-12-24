@@ -50,4 +50,12 @@ public class UserService implements UserDetailsService {
         User savedUser=userRepository.save(toBeCreated);
         return modelMapper.map(savedUser, UserDTO.class);
     }
+
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email).orElse(null);
+    }
+
+    public User save(User newUser) {
+        return userRepository.save(newUser);
+    }
 }
