@@ -39,8 +39,6 @@ public class AuthControllers {
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody LogInDTO logInDTO, HttpServletRequest request, HttpServletResponse response){
         LoginResponseDTO loginResponseDTO=authService.login(logInDTO);
-        Long userId=authService.getUserIdByLogin(logInDTO);
-       // sessionService.createSession(userId,token);
         Cookie cookie=new Cookie("refreshToken", loginResponseDTO.getRefreshToken());
         cookie.setHttpOnly(true);
         cookie.setSecure("production".equals(deployEnv));
@@ -58,25 +56,4 @@ public class AuthControllers {
         LoginResponseDTO loginResponseDTO=authService.refresh(refreshToken);
         return  ResponseEntity.ok(loginResponseDTO);
     }
-
-//   @GetMapping("/validate")
-//    public ResponseEntity<String> isvalidToken(@CookieValue("token") String token)
-//   {
-//       if(sessionService.isValidToken(token))
-//       {
-//           return ResponseEntity.ok("Valid Token");
-//       }
-//       return ResponseEntity.status(401).body("Invalid Token");
-//   }
-//
-//   @GetMapping("/logout")
-//    public ResponseEntity<String> logout(@CookieValue("token")String token,HttpServletResponse response){
-//        Long userId=authService.getUserIdByToken(token);
-//        sessionService.removeSession(userId);
-//        Cookie cookie=new Cookie("token",null);
-//        cookie.setMaxAge(0);
-//        cookie.setHttpOnly(true);
-//        response.addCookie(cookie);
-//        return ResponseEntity.ok("User Logged Out");
-//   }
 }
