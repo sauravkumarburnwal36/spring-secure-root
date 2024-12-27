@@ -8,6 +8,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,6 +44,11 @@ public class GlobalExceptionHandler {
                 .message("Input Validation Failed:")
                 .subErrors(errors)
                 .build();
+        return buildApiReponse(apiError);
+    }
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ApiResponse<?>> handlingAccessDeniedException(AccessDeniedException exception){
+        ApiError apiError=ApiError.builder().status(HttpStatus.FORBIDDEN).message(exception.getMessage()).build();
         return buildApiReponse(apiError);
     }
 
