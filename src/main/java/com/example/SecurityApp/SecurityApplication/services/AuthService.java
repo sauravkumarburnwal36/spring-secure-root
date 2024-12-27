@@ -28,10 +28,6 @@ public class AuthService {
     }
 
 
-    public Long getUserIdByToken(String token) {
-        return jwtService.getUserIdFromToken(token);
-    }
-
     public LoginResponseDTO refresh(String refreshToken) {
         Long userId= jwtService.getUserIdFromToken(refreshToken);
         sessionService.validateSession(refreshToken);
