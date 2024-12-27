@@ -12,4 +12,5 @@ public class PostDTO {
     private Long postId;
     private String title;
     private String description;
+    private UserDTO author;
 }

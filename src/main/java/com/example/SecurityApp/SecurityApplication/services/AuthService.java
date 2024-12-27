@@ -27,13 +27,6 @@ public class AuthService {
         return new LoginResponseDTO(user.getId(),accessToken,refreshToken);
     }
 
-    public Long getUserIdByLogin(LogInDTO logInDTO) {
-        Authentication authentication= authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(logInDTO.getEmail(),logInDTO.getPassword())
-        );
-        User user=(User)authentication.getPrincipal();
-        return user.getId();
-    }
 
     public Long getUserIdByToken(String token) {
         return jwtService.getUserIdFromToken(token);

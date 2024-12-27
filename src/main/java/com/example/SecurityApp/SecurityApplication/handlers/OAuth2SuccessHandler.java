@@ -48,6 +48,6 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         cookie.setSecure("production".equals(deployEnv));
         response.addCookie(cookie);
         String frontEndUrl="http://localhost:9090/home.html?token="+accessToken;
-        getRedirectStrategy().sendRedirect(request,response,frontEndUrl);
+        response.sendRedirect(frontEndUrl);
     }
 }
